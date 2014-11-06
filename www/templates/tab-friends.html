@@ -1,0 +1,16 @@
+<ion-view title="Friends">
+  <ion-nav-buttons side="right">
+      <button class="button icon ion-plus" ng-click="openModal()"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <button class="button icon ion-edit" ng-click="edit()"></button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.$id}}">
+        {{friend.firstname + ' ' + friend.lastname }}
+        <ion-delete-button class="ion-minus-circled" ng-click="delete(friend)"></ion-delete-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
