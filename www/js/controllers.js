@@ -49,8 +49,16 @@ angular.module('starter.controllers', [])
             $ionicLoading.hide();
         });
 
+        $scope.editing = false;
+
         $scope.edit = function() {
-            $ionicListDelegate.showDelete(true);
+            $scope.editing = true;
+            $ionicListDelegate.showDelete($scope.editing);
+        };
+
+        $scope.endEdit = function(){
+            $scope.editing = false;
+            $ionicListDelegate.showDelete($scope.editing);
         };
 
         $ionicModal.fromTemplateUrl('templates/new-user-form.html', {
