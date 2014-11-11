@@ -1,5 +1,38 @@
 angular.module('starter.controllers', [])
 
+    .controller('PeopleCtrl', function($scope, people, $ionicLoading){
+        $scope.people = people.list;
+
+        $scope.addPerson = function(){
+            people.add().then(function(){
+                $scope.$broadcast('scroll.refreshComplete');
+            })
+        };
+
+        $ionicLoading.show({
+            template: '<i class="ion-loading-c"></i><br>Loading...'
+        });
+
+        people.ready.then(function(){
+            $ionicLoading.hide();
+        })
+    })
+
+    .controller('PersonCtrl', function($scope, person, people, $ionicActionSheet){
+        $scope.person = person;
+
+        $scope.deletePerson = function(){
+            $ionicActionSheet.show({
+                destructiveText: 'Delete ' + person.name.first,
+                cancelText: 'Cancel',
+                destructiveButtonClicked: function(){
+                    people.list.splice(people.list.indexOf(person), 1);
+                    window.history.back();
+                }
+            })
+        }
+    })
+
     .controller('DashCtrl', function ($scope) {
 
     })

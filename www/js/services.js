@@ -34,4 +34,25 @@ angular.module('starter.services', ['firebase'])
                 return users.$remove(user);
             }
         }
+    })
+
+    .factory('people', function($http, $q){
+        var people = {};
+        var n = 0;
+
+        people.list = [];
+
+        people.add = function(){
+            return $http.get('http://api.randomuser.me?q=' + (n++)).then(function(response){
+                people.list.push(response.data.results[0].user);
+            })
+        }
+
+        people.ready = $q.all([
+            people.add(),
+            people.add(),
+            people.add()
+        ]);
+
+        return people;
     });

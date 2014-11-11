@@ -47,7 +47,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                     }
                 }
             })
-
+            .state('tab.people', {
+                url: '/people',
+                views: {
+                    'tab-people':{
+                        templateUrl: 'templates/tab-people.html',
+                        controller: 'PeopleCtrl'
+                    }
+                }
+            })
+            .state('tab.person', {
+                url: '/person/:index',
+                views: {
+                    'tab-people':{
+                        templateUrl: 'templates/person.html',
+                        controller: 'PersonCtrl',
+                        resolve: {
+                            person: function($stateParams, people){
+                                return people.ready.then(function(){
+                                    return people.list[$stateParams.index];
+                                })
+                            }
+                        }
+                    }
+                }
+            })
             .state('tab.friends', {
                 url: '/friends',
                 views: {
@@ -78,7 +102,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/tab/dash');
+        $urlRouterProvider.otherwise('/tab/people');
 
     });
 
