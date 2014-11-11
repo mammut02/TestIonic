@@ -37,8 +37,17 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('FriendsCtrl', function ($scope, $ionicModal, $ionicListDelegate, Users) {
+    .controller('FriendsCtrl', function ($scope, $ionicModal, $ionicListDelegate, $ionicLoading, Users) {
+
+        $ionicLoading.show({
+            template: '<i class="ion-loading-c"></i><br>Loading...'
+        });
+
         $scope.friends = Users.all();
+
+        $scope.friends.$loaded().then(function(){
+            $ionicLoading.hide();
+        });
 
         $scope.edit = function() {
             $ionicListDelegate.showDelete(true);
